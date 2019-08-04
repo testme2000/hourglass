@@ -1,23 +1,27 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <MainCanvas errormessage="You need HTML5 to display HourGlass"></MainCanvas>
+    <Glass errormessage="Test"></Glass>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+  import MainBoard from './components/MainBoard.vue'
+  import Glass from './components/Glass.vue'
 
 export default {
   name: 'app',
   components: {
-    HelloWorld
+    MainBoard,
+    Glass
   }
 }
+
+
 </script>
 
 <style>
-#app {
+#apphour {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;

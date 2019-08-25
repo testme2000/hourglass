@@ -1,17 +1,22 @@
 <template>
     <div>
-        <svg></svg>
-        <Glass errormessage="Test"></Glass>
+        <canvas :id="boardid"></canvas>
+        <Glass :canvasid="boardid"></Glass>
     </div>
 </template>
 
 <script>
-    import Glass from "./Glass.vue"
+    import Glass from './Glass.vue'
 
     export default {
         name : 'MainBoard',
         props : {
             errormessage : String
+        },
+        data() {
+            return {
+                boardid : 'mainboard'
+            }
         },
         components : {
             Glass
@@ -19,7 +24,7 @@
     }
 </script>
 <style>
-    svg {
+    canvas {
         padding: 0;
         margin: auto;
         display: block;

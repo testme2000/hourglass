@@ -1,19 +1,16 @@
 <template>
   <div id="app">
-    <MainCanvas errormessage="You need HTML5 to display HourGlass"></MainCanvas>
-    <Glass errormessage="Test"></Glass>
+    <MainBoard errormessage="You need HTML5 to display HourGlass"></MainBoard>
   </div>
 </template>
 
 <script>
   import MainBoard from './components/MainBoard.vue'
-  import Glass from './components/Glass.vue'
 
 export default {
   name: 'app',
   components: {
-    MainBoard,
-    Glass
+    MainBoard
   }
 }
 

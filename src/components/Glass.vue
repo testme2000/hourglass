@@ -9,7 +9,7 @@
                 canvasContext : null,
                 outerBoundry : [
                    // Top Base
-                   [208,94],[418,94],
+                   [80,30],[180,30],
                    // Bottom Base
                    [208,495],[417,495]
                 ],
@@ -48,9 +48,49 @@
 
                 // Draw Top Base
                 let point = this.outerBoundry[0];
-                this.canvasContext.moveTo(208,94);
-                this.canvasContext.lineTo(418,94);
+                this.canvasContext.moveTo(80,31);
+                this.canvasContext.lineTo(180,31);
                 this.canvasContext.stroke();
+                // Draw Bottom Base
+                point = this.outerBoundry[1];
+                this.canvasContext.moveTo(80,119);
+                this.canvasContext.lineTo(180,119);
+                this.canvasContext.stroke();
+                // Draw Top/Left Arm
+                point = this.outerBoundry[2];
+                this.canvasContext.moveTo(81,32);
+                this.canvasContext.lineTo(125,65);
+                this.canvasContext.stroke();
+                // Draw Top/Right Arm
+                point = this.outerBoundry[4];
+                this.canvasContext.moveTo(178,32);
+                this.canvasContext.lineTo(135,65);
+                this.canvasContext.stroke();
+                // Draw Bottom/Left Arm
+                point = this.outerBoundry[5];
+                this.canvasContext.moveTo(81,118);
+                this.canvasContext.lineTo(125,75);
+                this.canvasContext.stroke();
+                // Draw Bottom/Right Arm
+                point = this.outerBoundry[6];
+                this.canvasContext.moveTo(178,118);
+                this.canvasContext.lineTo(135,75);
+                this.canvasContext.stroke();
+                // Draw Left curve shape
+                this.canvasContext.moveTo(125,65);
+                //this.canvasContext.lineTo(126,75);
+                this.canvasContext.quadraticCurveTo(132,68,125,75);
+                this.canvasContext.stroke();
+                // Draw Right curve shape
+                this.canvasContext.moveTo(135,65);
+                //this.canvasContext.lineTo(135,75);
+                this.canvasContext.quadraticCurveTo(131,68,135,75);
+                this.canvasContext.stroke();
+
+
+
+
+
             }
         }
 

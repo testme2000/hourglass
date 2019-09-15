@@ -19,6 +19,10 @@
                     [208,100],[301,275],
                     // Top/Right
                     [418,100],[321,280]
+                ],
+
+                topSand : [
+                    [90,34],[100,30]
                 ]
 
             }
@@ -31,8 +35,10 @@
             if (canvas.getContext('2d')) {
                 // Draw top/bottom hourglass base
                 this.canvasContext = canvas.getContext('2d');
-                this.canvasContext.fillRect(80, 20, 100, 10);
-                this.canvasContext.fillRect(80,120,100,10);
+                let glasspoint = this.$store.getters.glasshourtoparea;
+                this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
+                glasspoint = this.$store.getters.glasshourbottomarea;
+                this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
                 // Draw core of hourglass
                 this.preparePath();
             }
@@ -40,57 +46,70 @@
         methods: {
             preparePath() 
             {
-                var iCounter = 0, current = null;
-
                 this.canvasContext.beginPath();
-                this.canvasContext.lineWidth = 1;
-                this.canvasContext.strokeStyle = "red";
+                this.canvasContext.lineWidth = this.$store.getters.glasslinethinkness;
+                this.canvasContext.strokeStyle = this.$store.getters.glasslinecolor;
 
                 // Draw Top Base
-                let point = this.outerBoundry[0];
-                this.canvasContext.moveTo(80,31);
-                this.canvasContext.lineTo(180,31);
+                let glasspoint = this.$store.getters.topbase;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Bottom Base
-                point = this.outerBoundry[1];
-                this.canvasContext.moveTo(80,119);
-                this.canvasContext.lineTo(180,119);
+                glasspoint = this.$store.getters.bottombase;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Top/Left Arm
-                point = this.outerBoundry[2];
-                this.canvasContext.moveTo(81,32);
-                this.canvasContext.lineTo(125,65);
+                glasspoint = this.$store.getters.topleftbar;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Top/Right Arm
-                point = this.outerBoundry[4];
-                this.canvasContext.moveTo(178,32);
-                this.canvasContext.lineTo(135,65);
+                glasspoint = this.$store.getters.toprightbar;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Bottom/Left Arm
-                point = this.outerBoundry[5];
-                this.canvasContext.moveTo(81,118);
-                this.canvasContext.lineTo(125,75);
+                glasspoint = this.$store.getters.bottomleftbar;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Bottom/Right Arm
-                point = this.outerBoundry[6];
-                this.canvasContext.moveTo(178,118);
-                this.canvasContext.lineTo(135,75);
+                glasspoint = this.$store.getters.bottomrightbar;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
                 this.canvasContext.stroke();
                 // Draw Left curve shape
-                this.canvasContext.moveTo(125,65);
-                //this.canvasContext.lineTo(126,75);
-                this.canvasContext.quadraticCurveTo(132,68,125,75);
+                glasspoint = this.$store.getters.leftcurveshape;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.quadraticCurveTo(glasspoint[1][0],glasspoint[1][1],glasspoint[1][2],glasspoint[1][3]);
                 this.canvasContext.stroke();
                 // Draw Right curve shape
-                this.canvasContext.moveTo(135,65);
-                //this.canvasContext.lineTo(135,75);
-                this.canvasContext.quadraticCurveTo(131,68,135,75);
+                glasspoint = this.$store.getters.rightcurveshape;
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.quadraticCurveTo(glasspoint[1][0],glasspoint[1][1],glasspoint[1][2],glasspoint[1][3]);
                 this.canvasContext.stroke();
-
-
-
-
-
+                // Draw initial top Sand
+                this.canvasContext.beginPath();
+                this.canvasContext.moveTo(93,40);
+                this.canvasContext.lineTo(129,67);
+                this.canvasContext.lineTo(132,67);
+                this.canvasContext.lineTo(166,40);
+                this.canvasContext.closePath();
+                // the fill color
+                this.canvasContext.fillStyle = "red";
+                this.canvasContext.fill();
+                // Draw final bottom sand
+                this.canvasContext.beginPath();
+                this.canvasContext.moveTo(81,118);
+                this.canvasContext.lineTo(105,95);
+                this.canvasContext.lineTo(155,95);
+                this.canvasContext.lineTo(178,118);
+                this.canvasContext.closePath();
+                // the fill color
+                this.canvasContext.fillStyle = "red";
+                this.canvasContext.fill();
             }
         }
 

@@ -5,7 +5,7 @@
 </template>
 
 <script>
-  import MainBoard from './components/MainBoard.vue'
+import MainBoard from './components/MainBoard.vue'
 
 export default {
   name: 'app',

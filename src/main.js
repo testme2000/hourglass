@@ -18,7 +18,8 @@ const GlassInformation = new Vuex.Store({
       leftcurve : [[125,65],[132,68,125,75]],
       rightcurve : [[135,65],[131,68,135,75]],
       linethinkness : 1,
-      linecolor: "red"
+      linecolor: "red",
+      topsandarea: [[93,40],[129,67],[132,67],[166,40]]
   },
   getters: {
     glasshourtoparea: (state) => {

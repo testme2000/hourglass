@@ -2,7 +2,8 @@
     export default {
         name : 'Glass',
         props : {
-            canvasid : String
+            canvasid : String,
+            starthour : Boolean
         },
         data() {
             return {
@@ -23,14 +24,69 @@
 
                 topSand : [
                     [90,34],[100,30]
-                ]
-
+                ],
+                drawinterval : -1,
+                cleargrid : [[93,40][166,40]],
+                currentIndex : -1,
+                startrow : 0,
+                endrow : 0,
+                column : 0,
+                rowbegin : 93,
+                rowend : 166,
+                finalrow : 132,
+                rowupdate : 2
+            }
+        },
+        watch: {
+            starthour(value,previousvalue) {
+                if(value) {
+                    console.log("Hour Glass start");
+                    this.startrow = this.rowbegin;
+                    this.endrow = 166 - 93;
+                    this.column = 40;
+                    // Prepare for next row
+                    this.rowbegin += 1;
+                    var self = this;
+                    this.drawinterval = setInterval(() => {
+                        if(self.startrow < self.rowend) {
+                            // Clear the row
+                            this.animatehourglass();
+                        }
+                        else if(self.startrow >= self.rowend) {
+                            // Check whether we reach at the end
+                            if(self.rowbegin >= self.finalrow) {
+                                // top are sand is empty
+                                clearInterval(self.drawinterval);
+                            }
+                            else 
+                            {
+                                // Reset column 
+                                self.column++;
+                                if(self.column > 43) {
+                                    // reset it to original
+                                 //   self.column = 43;
+                                }
+                                self.rowbegin += self.rowupdate;
+                                self.rowend -= self.rowupdate;
+                                //self.rowupdate = (self.rowupdate == 2 ? 0 : 2); 
+                                self.startrow = self.rowbegin;
+                                this.animatehourglass();
+                            }
+                        }
+                    },500);
+                }
+                else 
+                {
+                    console.log("Hour Glass stop");
+                    clearInterval(this.drawinterval);
+                }
             }
         },
         render() {
             return null;
         },
         mounted() {
+            console.log("Start glass by value " + this.starthour);
             var canvas = document.getElementById(this.canvasid);
             if (canvas.getContext('2d')) {
                 // Draw top/bottom hourglass base
@@ -100,6 +156,7 @@
                 // the fill color
                 this.canvasContext.fillStyle = "red";
                 this.canvasContext.fill();
+                /*
                 // Draw final bottom sand
                 this.canvasContext.beginPath();
                 this.canvasContext.moveTo(81,118);
@@ -110,6 +167,14 @@
                 // the fill color
                 this.canvasContext.fillStyle = "red";
                 this.canvasContext.fill();
+                */
+            },
+            animatehourglass() 
+            {
+                console.log("Hour glass animation started");
+                this.canvasContext.fillStyle = "green";
+                this.canvasContext.fillRect(this.startrow,this.column,1,1);
+                this.startrow++;
             }
         }
 

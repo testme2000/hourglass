@@ -1,7 +1,8 @@
 <template>
     <div>
         <canvas :id="boardid"></canvas>
-        <Glass :canvasid="boardid"></Glass>
+        <Glass :canvasid="boardid" :starthour="eventstatus"></Glass>
+        <button @click="StartHourGlass">Start Hourglass</button>
     </div>
 </template>
 
@@ -15,11 +16,18 @@
         },
         data() {
             return {
-                boardid : 'mainboard'
+                boardid : 'mainboard',
+                eventstatus : false
             }
         },
         components : {
             Glass
+        },
+        methods: {
+            StartHourGlass() {
+               this.eventstatus = !this.eventstatus;
+               console.log("Event change");
+            }
         }
     }
 </script>

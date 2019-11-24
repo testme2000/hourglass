@@ -37,28 +37,34 @@
                     finalrow : 132,
                     rowupdate : 2
                 },
-                drawinterval : -1,
-                cleargrid : [[93,40][166,40]],
-                currentIndex : -1,
-                startrow : 0,
-                endrow : 0,
-                column : 0,
-                rowbegin : 93,
-                rowend : 166,
-                finalrow : 132,
-                rowupdate : 2
+                middleFlowArea : {
+                    drawinterval : -1,
+                    rowbegin : 130,
+                    columnend : 116,
+                    currentIndex : -1,
+                    column : 66,
+                    finalrow : 132,
+                    rowupdate : 2
+                },
+                bottomFillArea : {
+                    drawInterval : -1,
+                    leftrowBegin : 0,
+                    rightrowBegin : 0,
+                    leftrowEnd : 0,
+                    rightrowEnd : 178,
+                    initRow : 84,
+                    finalrow : 0
+                }
             }
         },
         watch: {
             starthour(value,previousvalue) {
                 if(value) {
-                    console.log("Hour Glass start");
                     this.performWorkOnTopArea();
-                    console.log("Add middle animation here");
+                    this.performWorkOnMiddleArea();
                 }
                 else 
                 {
-                    console.log("Hour Glass stop");
                     clearInterval(this.drawinterval);
                 }
             }
@@ -67,7 +73,6 @@
             return null;
         },
         mounted() {
-            console.log("Start glass by value " + this.starthour);
             var canvas = document.getElementById(this.canvasid);
             if (canvas.getContext('2d')) {
                 // Draw top/bottom hourglass base
@@ -152,7 +157,6 @@
             },
             animatetoparea() 
             {
-                console.log("Hour glass animation started");
                 this.canvasContext.fillStyle = "white";
                 this.canvasContext.fillRect(this.topClearArea.startrow,this.topClearArea.column,1,1);
                 this.topClearArea.startrow++;
@@ -169,6 +173,22 @@
                 // the fill color
                 this.canvasContext.fillStyle = "white";
                 this.canvasContext.fill();
+            },
+            animateMiddlearea()
+            {
+                this.canvasContext.fillStyle = "red";
+                this.canvasContext.fillRect(this.middleFlowArea.startrow,this.middleFlowArea.column,2,2);
+                this.middleFlowArea.column++;
+            },
+            animateBottomArea()
+            {
+                this.canvasContext.beginPath();
+                this.canvasContext.moveTo(this.bottomFillArea.startrow,this.bottomFillArea.column);
+                this.canvasContext.lineTo(this.bottomFillArea.startrow,this.bottomFillArea.column + 1);
+                this.canvasContext.strokeStyle = 'red';
+                this.canvasContext.stroke();
+                this.canvasContext.closePath();
+                this.bottomFillArea.startrow++;
             },
             performWorkOnTopArea()
             {
@@ -203,9 +223,55 @@
                             }
                         }
                     },500);
+            },
+            performWorkOnMiddleArea()
+            {
+                    this.middleFlowArea.startrow = this.middleFlowArea.rowbegin;
+                    var self = this;
+                    this.middleFlowArea.drawinterval = setInterval(() => {
+                        if(self.middleFlowArea.column < self.middleFlowArea.rowend) {
+                            // Clear the row
+                            this.animateMiddlearea();
+                        }
+                        else if(self.middleFlowArea.column <= self.middleFlowArea.columnend) {
+                            // Check whether we reach at the end
+                            // Reset column 
+                            self.middleFlowArea.rowbegin += self.middleFlowArea.rowupdate;
+                            this.animateMiddlearea();
+                        }
+                        else if(self.middleFlowArea.column > self.middleFlowArea.columnend) {
+                                // top are sand is empty
+                                clearInterval(self.middleFlowArea.drawinterval);
+                                // Mark the area as clear
+                                this.performBottomArea();
+                        }
+                    },500);
+            },
+            performBottomArea() 
+            {
+                console.log("Bottom area started");
+                this.bottomFillArea.startrow = this.bottomFillArea.initRow;
+                this.bottomFillArea.column = 117;
+                var self = this;
+                this.bottomFillArea.drawinterval = setInterval(() => {
+                    if(self.bottomFillArea.startrow < self.bottomFillArea.rightrowEnd) {
+                        // Clear the row
+                        this.animateBottomArea();
+                    }
+                    else if(self.bottomFillArea.column > self.bottomFillArea.columnend) {
+                        // top are sand is empty
+                        clearInterval(self.bottomFillArea.drawinterval);
+                    }
+                    else {
+                        // Adjust both row and column
+                        this.bottomFillArea.initRow += 1;
+                        self.bottomFillArea.startrow = this.bottomFillArea.initRow;
+                        self.bottomFillArea.column -= 1;
+                        self.bottomFillArea.rightrowEnd -= 1;
+                    }
+                },500);
             }
         }
-
     }
 </script>
 

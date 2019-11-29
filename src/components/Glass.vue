@@ -53,7 +53,10 @@
                     leftrowEnd : 0,
                     rightrowEnd : 178,
                     initRow : 84,
-                    finalrow : 0
+                    finalrow : 0,
+                    isTopAreaClear: false,
+                    isMiddleAreaClear : false,
+                    isFinalAnimationPhase : false
                 }
             }
         },
@@ -142,18 +145,6 @@
                 // the fill color
                 this.canvasContext.fillStyle = "red";
                 this.canvasContext.fill();
-                /*
-                // Draw final bottom sand
-                this.canvasContext.beginPath();
-                this.canvasContext.moveTo(81,118);
-                this.canvasContext.lineTo(105,95);
-                this.canvasContext.lineTo(155,95);
-                this.canvasContext.lineTo(178,118);
-                this.canvasContext.closePath();
-                // the fill color
-                this.canvasContext.fillStyle = "red";
-                this.canvasContext.fill();
-                */
             },
             animatetoparea() 
             {
@@ -173,10 +164,27 @@
                 // the fill color
                 this.canvasContext.fillStyle = "white";
                 this.canvasContext.fill();
+                // Indicate bottom area that we are cleared from top side
+                this.bottomFillArea.isTopAreaClear = true;
             },
             animateMiddlearea()
             {
                 this.canvasContext.fillStyle = "red";
+                this.canvasContext.fillRect(this.middleFlowArea.startrow,this.middleFlowArea.column,2,2);
+                this.middleFlowArea.column++;
+            },
+            reinitmiddleFlowArea() {
+                this.middleFlowArea.drawinterval = -1;
+                this.middleFlowArea.rowbegin = 130;
+                this.middleFlowArea.columnend = 116;
+                this.middleFlowArea.currentIndex = -1;
+                this.middleFlowArea.column = 66;
+                this.middleFlowArea.finalrow = 132;
+                this.middleFlowArea.rowupdate = 2;
+            },
+            clearMiddlearea()
+            {
+                this.canvasContext.fillStyle = "white";
                 this.canvasContext.fillRect(this.middleFlowArea.startrow,this.middleFlowArea.column,2,2);
                 this.middleFlowArea.column++;
             },
@@ -210,6 +218,9 @@
                                 clearInterval(self.topClearArea.drawinterval);
                                 // Mark the area as clear
                                 this.cleartoparea();
+                                // Start middle area cleanup
+                                this.reinitmiddleFlowArea();
+                                this.performCleanupWorkOnMiddleArea();
                             }
                             else 
                             {
@@ -247,6 +258,33 @@
                         }
                     },500);
             },
+            performCleanupWorkOnMiddleArea()
+            {
+                    this.middleFlowArea.startrow = this.middleFlowArea.rowbegin;
+                    // Reset columnend to current column of bottom area fillup region, we 
+                    // don't need to go all the way down
+                    this.middleFlowArea.columnend = this.bottomFillArea.column - 2;
+                    var self = this;
+                    this.middleFlowArea.drawinterval = setInterval(() => {
+                        if(self.middleFlowArea.column < self.middleFlowArea.rowend) {
+                            // Clear the row
+                            this.clearMiddlearea();
+                        }
+                        else if(self.middleFlowArea.column <= self.middleFlowArea.columnend) {
+                            // Check whether we reach at the end
+                            // Reset column 
+                            self.middleFlowArea.rowbegin += self.middleFlowArea.rowupdate;
+                            this.clearMiddlearea();
+                        }
+                        else if(self.middleFlowArea.column > self.middleFlowArea.columnend) {
+                            // top are sand is empty
+                            clearInterval(self.middleFlowArea.drawinterval);
+                            // Mark that middle area is clear and we are in final phase
+                            self.bottomFillArea.isMiddleAreaClear = true;
+                            self.bottomFillArea.isFinalAnimationPhase = true;
+                        }
+                    },500);
+            },
             performBottomArea() 
             {
                 console.log("Bottom area started");
@@ -258,11 +296,16 @@
                         // Clear the row
                         this.animateBottomArea();
                     }
-                    else if(self.bottomFillArea.column > self.bottomFillArea.columnend) {
-                        // top are sand is empty
-                        clearInterval(self.bottomFillArea.drawinterval);
-                    }
                     else {
+                        if(self.bottomFillArea.isTopAreaClear && !self.bottomFillArea.isFinalAnimationPhase) {
+                            self.bottomFillArea.isFinalAnimationPhase = true;
+                            //self.performCleanupWorkOnMiddleArea();
+                        }
+                        else if(self.bottomFillArea.isTopAreaClear && self.bottomFillArea.isFinalAnimationPhase && self.bottomFillArea.isMiddleAreaClear)
+                        {
+                            // we completed animation
+                            clearInterval(self.bottomFillArea.drawinterval);
+                        }
                         // Adjust both row and column
                         this.bottomFillArea.initRow += 1;
                         self.bottomFillArea.startrow = this.bottomFillArea.initRow;

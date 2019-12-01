@@ -13,12 +13,19 @@
     "vuex": "^3.1.1"
   },
   "devDependencies": {
+    "@stryker-mutator/core": "^2.4.0",
+    "@stryker-mutator/html-reporter": "^2.4.0",
+    "@stryker-mutator/jasmine-framework": "^2.4.0",
+    "@stryker-mutator/javascript-mutator": "^2.4.0",
+    "@stryker-mutator/jest-runner": "^2.4.0",
+    "@stryker-mutator/vue-mutator": "^2.4.0",
     "@vue/cli-plugin-babel": "^3.10.0",
     "@vue/cli-plugin-eslint": "^3.10.0",
     "@vue/cli-service": "^3.10.0",
     "babel-eslint": "^10.0.1",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
+    "jasmine-core": "^3.5.0",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {

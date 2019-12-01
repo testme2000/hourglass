@@ -19,6 +19,8 @@ const GlassInformation = new Vuex.Store({
       rightcurve : [[135,65],[131,68,135,75]],
       linethinkness : 1,
       linecolor: "red",
+      fillcolor: "red",
+      clearcolor: "white",
       topsandarea: [[93,40],[129,67],[132,67],[166,40]]
   },
   getters: {
@@ -57,6 +59,15 @@ const GlassInformation = new Vuex.Store({
     },
     glasslinecolor : (state) => {
       return state.linecolor;
+    },
+    glassfillcolor : (state) => {
+      return state.fillcolor;
+    },
+    glassclearcolor : (state) => {
+      return state.clearcolor;
+    },
+    topsandarea : (state) => {
+      return state.topsandarea;
     }
   }
 })

@@ -136,40 +136,42 @@
                 this.canvasContext.quadraticCurveTo(glasspoint[1][0],glasspoint[1][1],glasspoint[1][2],glasspoint[1][3]);
                 this.canvasContext.stroke();
                 // Draw initial top Sand
+                glasspoint = this.$store.getters.topsandarea;
                 this.canvasContext.beginPath();
-                this.canvasContext.moveTo(93,40);
-                this.canvasContext.lineTo(129,67);
-                this.canvasContext.lineTo(132,67);
-                this.canvasContext.lineTo(166,40);
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
+                this.canvasContext.lineTo(glasspoint[2][0],glasspoint[2][1]);
+                this.canvasContext.lineTo(glasspoint[3][0],glasspoint[3][1]);
                 this.canvasContext.closePath();
                 // the fill color
-                this.canvasContext.fillStyle = "red";
+                this.canvasContext.fillStyle = this.$store.getters.glassfillcolor;
                 this.canvasContext.fill();
             },
             animatetoparea() 
             {
-                this.canvasContext.fillStyle = "white";
+                this.canvasContext.fillStyle = this.$store.getters.glassclearcolor;
                 this.canvasContext.fillRect(this.topClearArea.startrow,this.topClearArea.column,1,1);
                 this.topClearArea.startrow++;
             },
             cleartoparea()
             {
                 // Draw initial top Sand
+                glasspoint = this.$store.getters.topsandarea;
                 this.canvasContext.beginPath();
-                this.canvasContext.moveTo(93,40);
-                this.canvasContext.lineTo(129,67);
-                this.canvasContext.lineTo(132,67);
-                this.canvasContext.lineTo(166,40);
+                this.canvasContext.moveTo(glasspoint[0][0],glasspoint[0][1]);
+                this.canvasContext.lineTo(glasspoint[1][0],glasspoint[1][1]);
+                this.canvasContext.lineTo(glasspoint[2][0],glasspoint[2][1]);
+                this.canvasContext.lineTo(glasspoint[3][0],glasspoint[3][1]);
                 this.canvasContext.closePath();
                 // the fill color
-                this.canvasContext.fillStyle = "white";
+                this.canvasContext.fillStyle = this.$store.getters.glassclearcolor;
                 this.canvasContext.fill();
                 // Indicate bottom area that we are cleared from top side
                 this.bottomFillArea.isTopAreaClear = true;
             },
             animateMiddlearea()
             {
-                this.canvasContext.fillStyle = "red";
+                this.canvasContext.fillStyle = this.$store.getters.glassfillcolor;
                 this.canvasContext.fillRect(this.middleFlowArea.startrow,this.middleFlowArea.column,2,2);
                 this.middleFlowArea.column++;
             },
@@ -184,7 +186,7 @@
             },
             clearMiddlearea()
             {
-                this.canvasContext.fillStyle = "white";
+                this.canvasContext.fillStyle = this.$store.getters.glassclearcolor;
                 this.canvasContext.fillRect(this.middleFlowArea.startrow,this.middleFlowArea.column,2,2);
                 this.middleFlowArea.column++;
             },
@@ -193,7 +195,7 @@
                 this.canvasContext.beginPath();
                 this.canvasContext.moveTo(this.bottomFillArea.startrow,this.bottomFillArea.column);
                 this.canvasContext.lineTo(this.bottomFillArea.startrow,this.bottomFillArea.column + 1);
-                this.canvasContext.strokeStyle = 'red';
+                this.canvasContext.strokeStyle = this.$store.getters.glassfillcolor;
                 this.canvasContext.stroke();
                 this.canvasContext.closePath();
                 this.bottomFillArea.startrow++;
@@ -287,7 +289,6 @@
             },
             performBottomArea() 
             {
-                console.log("Bottom area started");
                 this.bottomFillArea.startrow = this.bottomFillArea.initRow;
                 this.bottomFillArea.column = 117;
                 var self = this;

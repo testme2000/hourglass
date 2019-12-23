@@ -15,6 +15,7 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-stage-3": "^6.24.1",
     "core-js": "^2.6.5",
+    "jest-environment-jsdom-fourteen": "^1.0.1",
     "vue": "^2.6.10",
     "vuex": "^3.1.1"
   },
@@ -42,11 +43,14 @@
     "babel-preset-env": "^1.7.0",
     "babel-preset-react-app-babel-7": "^4.0.2-0",
     "bootstrap": "^4.3.1",
+    "canvas-prebuilt": "^2.0.0-alpha.14",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
     "jasmine-core": "^3.5.0",
     "jest": "^24.9.0",
-    "jest-serializer-vue": "^2.0.2",
+    "jest-canvas-mock": "^2.2.0",
+    "jest-serializer-vue": "^2",
+    "jest/**/jsdom": "^13.0.0",
     "popper.js": "^1.15.0",
     "vue-jest": "^3.0.5",
     "vue-template-compiler": "^2.6.10"
@@ -80,6 +84,7 @@
       "json",
       "vue"
     ],
+    "setupFiles": ["jest-canvas-mock"],
     "moduleNameMapper": {
       "^@/(.*)$": "<rootDir>/src/$1"
     },
@@ -95,6 +100,8 @@
     ],
     "testMatch": [
       "<rootDir>/test/*.spec.js"
-    ]
+    ],
+    "testEnvironment": "jest-environment-jsdom-fourteen"
+   
   }
 }

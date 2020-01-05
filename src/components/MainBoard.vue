@@ -26,7 +26,6 @@
         methods: {
             StartHourGlass() {
                this.eventstatus = !this.eventstatus;
-               console.log("Event change");
             }
         }
     }

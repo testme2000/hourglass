@@ -76,19 +76,23 @@
             return null;
         },
         mounted() {
-            var canvas = document.getElementById(this.canvasid);
-            if (canvas.getContext('2d')) {
-                // Draw top/bottom hourglass base
-                this.canvasContext = canvas.getContext('2d');
-                let glasspoint = this.$store.getters.glasshourtoparea;
-                this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
-                glasspoint = this.$store.getters.glasshourbottomarea;
-                this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
-                // Draw core of hourglass
-                this.preparePath();
-            }
+           this.mountGlass();
         },
         methods: {
+            mountGlass() 
+            {
+                var canvas = document.getElementById(this.canvasid);
+                if (canvas.getContext('2d')) {
+                    // Draw top/bottom hourglass base
+                    this.canvasContext = canvas.getContext('2d');
+                    let glasspoint = this.$store.getters.glasshourtoparea;
+                    this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
+                    glasspoint = this.$store.getters.glasshourbottomarea;
+                    this.canvasContext.fillRect(glasspoint[0], glasspoint[1], glasspoint[2], glasspoint[3]);
+                    // Draw core of hourglass
+                    this.preparePath();
+                }
+            },
             preparePath() 
             {
                 this.canvasContext.beginPath();

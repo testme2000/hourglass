@@ -33,10 +33,10 @@
     "@stryker-mutator/javascript-mutator": "^2.4.0",
     "@stryker-mutator/jest-runner": "^2.4.0",
     "@stryker-mutator/vue-mutator": "^2.4.0",
-    "@vue/babel-preset-app": "^3.9.2",
-    "@vue/cli-plugin-babel": "^3.10.0",
+    "@vue/babel-preset-app": "^5.0.8",
+    "@vue/cli-plugin-babel": "^5.0.8",
     "@vue/cli-plugin-eslint": "^3.10.0",
-    "@vue/cli-service": "^3.10.0",
+    "@vue/cli-service": "^5.0.8",
     "@vue/test-utils": "^1.0.0-beta.30",
     "babel-core": "^7.0.0-bridge.0",
     "babel-eslint": "^10.0.1",
@@ -54,7 +54,7 @@
     "jest-canvas-mock": "^2.2.0",
     "jest-serializer-vue": "^2",
     "popper.js": "^1.15.0",
-    "vue-jest": "^3.0.5",
+    "vue-jest": "^4.0.1",
     "vue-template-compiler": "^2.6.10"
   },
   "eslintConfig": {
